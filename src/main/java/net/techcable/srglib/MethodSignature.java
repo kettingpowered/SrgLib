@@ -1,6 +1,7 @@
 package net.techcable.srglib;
 
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 
@@ -33,8 +34,8 @@ public final class MethodSignature {
     }
 
     public MethodSignature mapTypes(UnaryOperator<JavaType> transformer) {
-        JavaType newReturnType = transformer.apply(returnType);
-        ImmutableList<JavaType> newParameterTypes = ImmutableLists.transform(this.parameterTypes, transformer);
+        JavaType newReturnType = returnType.mapClass(transformer);
+        ImmutableList<JavaType> newParameterTypes = ImmutableList.copyOf(this.parameterTypes.stream().map(type -> type.mapClass(transformer)).collect(Collectors.toList()));
         MethodSignature result = create(newParameterTypes, newReturnType);
         if (result.equals(this)) {
             return this;

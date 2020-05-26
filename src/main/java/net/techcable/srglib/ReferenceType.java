@@ -10,7 +10,7 @@ import static java.util.Objects.*;
  */
 /* package */ final class ReferenceType implements JavaType {
     private final String name, internalName;
-    private static final Pattern TYPE_NAME_PATTERN = Pattern.compile("([\\w$_]+\\.)*([\\w$_]+)");
+    private static final Pattern TYPE_NAME_PATTERN = Pattern.compile("([\\w$_]+\\.)*([\\w-$_]+)");
     /* package */ ReferenceType(String name) {
         this.name = requireNonNull(name, "Null name");
         if (!TYPE_NAME_PATTERN.matcher(name).matches()) {
